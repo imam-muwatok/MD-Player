@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD-Player</title>
+    <!-- favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/img/favicon.webp">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/utils.css">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+       
+    </style>
+
+</head>
+<body>
+    <audio id="source" src="" ></audio>
+    <!-- <i class="fa-solid fa-angles-up"></i> -->
+    <div class="main">
+        <section id="home">
+            <div class="flex-between">
+                <span onclick="full()" id="btnFull" class="flex-end bg-secondary btn-left">
+                    <i id="iconFull" class="fa-solid fa-angles-up" style="margin: auto;"></i>
+                </span>
+                <span onclick="btnLyric()" class="flex-end bg-secondary btn-right">
+                    <i class="fa-solid fa-music" style="margin: auto;"></i>
+                </span>
+            </div>
+            <p class="now-playing my-1">-- OF --</p>
+            <div class="art-box" style="background-image: url(./assets/img/vinyl-record.png);">
+                <!-- <div id="art" class="art"></div> -->
+                <img id="art" class="art" alt="">
+            </div>
+            <div class="detail m-1">
+                <div class="flex-center">
+                    <p class="short-detail"><span class="artist"></span><span class="title"></span></p>
+                </div>
+                <p class="album my-1"></p>
+                <p class="my-1"><span class="genre"></span><span class="year"></span></p>
+            </div>
+        </section>
+        <section id="list" class="m-1">
+            <ul id="myList" style="margin: auto;"></ul>
+        </section>
+        <section id="lyric" style="text-align: center;">
+            <div class="flex-end">
+                <span onclick="btnHome()" class=" bg-secondary btn-right flex" >
+                    <div class="" style="margin: auto;">
+                        <i class="fa-solid fa-house" ></i>
+                    </div>
+                </span>
+            </div>
+            
+            <div id="myLyric" style="white-space: pre-line"></div>
+        </section>
+    </div>
+
+    <footer class="bg-white">
+        <div class="flex-around my-1">
+            <div id="btnType" onclick="btnType()" >
+                
+            </div>
+            <!-- <i class="fa-solid fa-heart"></i> -->
+            <i class="fa-regular fa-heart"></i>
+
+        </div>
+
+        <div class="flex-around my-1">
+            <span class="current-time">--:--</span>
+            <input id="remain" type="range" class="seek_slider" onchange="seekTo()"  min="1" max="100"
+            value="0">
+            <span class="total-duration">--:--</span>
+        </div>
+        <div class="flex-around my-1">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+            <i onclick="prevTrack()" class="fa-solid fa-step-backward fa-2x" ></i>
+            <div onclick="playpauseTrack()" class="playpause-track">
+                <i class="fa-solid fa-play-circle fa-2x"></i>
+            </div>
+            
+            <i onclick="nextTrack()" class="fa-solid fa-step-forward fa-2x"></i>
+            <i onclick="btnMenu()" class="fa-solid fa-bars "></i>
+        </div>
+    </footer>
+    <script>
+        // Define the list of tracks that have to be played
+        let track_list=[
+            {
+                artist:"Queen Bee",
+                title:"Mephisto",
+                album:"Oshi no ko",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"Queen Bee-Mephisto.webp",
+                path:"Queen-Bee_Mephisto.mp3"  
+            },
+
+
+            {
+                artist:"MAN WITH A MISSION feat Milet",
+                title:"Kizuna No Kiseki",
+                album:"Kizuna No Kiseki",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"MAN WITH A MISSION × milet - Kizuna no Kiseki Lyrics Translation.webp",
+                path:"MAN%20WITH%20A%20MISSION%20dan%20Milet%20~%20Kizuna%20No%20Kiseki.mp3"  
+            },
+            {
+                artist:"Yuuri",
+                title:"Betelgeuse",
+                album:"Betelgeuse",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"Yuika-sukidakara.webp",
+                path:"Yuuri%20-%20Betelgeuse.mp3"  
+            },
+            {
+                artist:"Yuika",
+                title:"Sukidakara",
+                album:"Sukidakara",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"Yuika-sukidakara.webp",
+                path:"Yuika%20-%20Sukidakara.mp3"  
+            },
+            {
+                artist:"DAOKO feat Kenshi Yonezu",
+                title:"Uchiage Hanabi",
+                album:"Uchiage Hanabi",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"DAOKO feat Kenshi Yonezu-Uchiage Hanabi.webp",
+                path:"DAOKO%20feat%20Kenshi%20Yonezu%20-%20Uchiage%20Hanabi.mp3"  
+            },
+            {
+                artist:"Radwimps",
+                title:"Sparkle",
+                album:"(Original Version)",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"Radwimps-Sparkle.webp",
+                path:"Radwimps%20%20-%20Sparkle%20(Original%20Version).mp3"  
+            },
+            {
+                artist:"Secret Base",
+                title:"Kimi Ga Kureta Mono",
+                album:"(10 Years After)",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"Secret_Base_(Kimi_ga_Kureta_Mono)_2001_CD_cover.webp",
+                path:"Secret%20Base%20Kimi%20Ga%20Kureta%20Mono%20(10%20Years%20After%20Ver).mp3"  
+            },
+            {
+                artist:"Radwimps Feat Toaka",
+                title:"Suzume",
+                album:"Ost Suzume",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"Radwimps Feat Toaka.webp",
+                path:"Radwimps%20-%20Suzume%20Feat%20Toaka.mp3"  
+            },
+            {
+                artist:"The Peggies",
+                title:"Ashiato",
+                album:"Ashiato",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"the-peggies-Ashiato.webp",
+                path:"The%20Peggies%20%20-%20Ashiato.mp3"  
+            },
+            {
+                artist:"The Peggies",
+                title:"Centimeter",
+                album:"Centimeter",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"the-peggies-Centimeter.webp",
+                path:"The%20Peggies%20-%20Centimeter.mp3"  
+            },
+            {
+                artist:"Yorushika",
+                title:"Hitchcock",
+                album:"Hitchcock",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"Yorushika-Hitchcock.webp",
+                path:"Yorushika%20-%20Hitchcock.mp3"  
+            },
+            {
+                artist:"Yorushika",
+                title:"Itte",
+                album:"Itte",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"Yorushika-itte.webp",
+                path:"Yorushika%20-%20itte.mp3"  
+            },
+            {
+                artist:"Tuyu",
+                title:"くらべられっ子",
+                album:"くらべられっ子",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"Tuyu-くらべられっ子.webp",
+                path:"TUYU%20-%20くらべられっ子%20(Compared%20Child).mp3"  
+            },
+            {
+                artist:"Aimer",
+                title:"Kataomoi",
+                album:"Kataomoi",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"Aimer - Kataomoi.webp",
+                path:"Aimer%20-%20Kataomoi.mp3"  
+            },
+            {
+                artist:"Aimer",
+                title:"Zankyou Sanka",
+                album:"Zankyou Sanka",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"Aimer-Zankyou Sanka.webp",
+                path:"Aimer%20-%20Zankyou%20Sanka.mp3"  
+            },
+            {
+                artist:"Lilas Ikuta",
+                title:"Free Free Free",
+                album:"Free Free Free",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"Lilas Ikuta-free free free.webp",
+                path:"Free%20Free%20Free%20Feat%20Lilas%20Ikuta.mp3"  
+            },
+            {
+                artist:"Hige Dandism",
+                title:"Mix Nuts",
+                album:"Mix Nuts",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"Hige Dandism-Mix Nuts.webp",
+                path:"Hige%20Dandism%20-%20Mix%20Nuts.mp3"  
+            },
+            {
+                artist:"Honeywork Feat Chuutan CV Saori Hayami",
+                title:"Kawaikute Gomen",
+                album:"Kawaikute Gomen",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"Honeywork Feat Chuutan CV Saori Hayami-Kawaikute Gomen.webp",
+                path:"Honeywork%20-%20Kawaikute%20Gomen%20Feat%20Chuutan%20CV%20Saori%20Hayami.mp3"  
+            },
+            {
+                artist:"Keno",
+                title:"Ohayou",
+                album:"Ohayou",
+                genre:"J-Pop",
+                year:"2023",
+                lyric:"",
+                image:"keno-ohayou.webp",
+                path:"Keno%20-%20Ohayou.mp3"  
+            },
+        ];
+        
+        
+
+        for (i = 0; i < track_list.length; ++i) {
+            let li = document.createElement('li');
+            li.innerText = track_list[i].path.replaceAll("%20", " ").replace(".mp3","");
+            li.id = i
+            li.dataset.id = i
+            li.onclick = function() {play(this)};
+            // li.onclick = play(i);
+            list.appendChild(li);
+        }
+
+    </script>
+    <script src="./assets/js/main.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script> -->
+    <script>
+
+        
+        
+
+    </script>
+</body>
+</html>

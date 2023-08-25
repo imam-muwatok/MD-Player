@@ -1,0 +1,151 @@
+:root {
+    --pink: #f14e95;
+    --bg: #0a0a0a;
+    --bg-primary: #d946ef;
+    --bg-secondary: #8b5cf6;
+    --bg-danger: #0a0a0a;
+    --bg-info: #0a0a0a;
+    --bg-warning: #0a0a0a;
+    --bg-dark: #0a0a0a;
+    --bg-light: #0a0a0a;
+    --bg-white: #fff;
+    --shadow: 0 2px 2px rgb(0 0 0 /0.5);
+    /* min-height:4000px; */
+}
+
+* {
+    padding:0;
+    margin: 0;
+}
+
+body {
+    position:relative;
+    min-height:100vh;
+}
+
+body::before {
+    content:'';
+    background-color: #000;
+    opacity: 0.3;
+    
+    /* background-color: rgba(0,0,0,0,0.5) */
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%; 
+    /* background-image: url(../../assets/img/headphone.jpeg);
+    background-size: cover;
+    background-position: center; */
+    z-index: -1;
+    /* filter: grayscale(1); */
+}
+
+p, li {
+    text-align: center;
+}
+
+footer {
+    min-height: 20vh;
+    overflow: hidden;
+}
+
+.main, .home, .list, .lyric {
+    min-height: 80vh;
+    max-height: 80vh;
+    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* replace default bg fullscreen */
+:fullscreen, ::backdrop {
+    background-color: var(--bg-secondary);
+}
+
+/* home bottom start */
+.art-box {
+    background-position: center;
+    background-size: cover;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    box-shadow:  0 2px 2px rgb(225 225 225 /0.5);
+
+}
+
+.art {
+    background-color: black;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.detail p {
+    color: #fff;
+    text-shadow:  0 2px 2px rgb(0 0 0 /0.5);
+}
+
+.now-playing {
+    color: #fff;
+    text-shadow:  0 2px 2px rgb(0 0 0 /0.5);
+}
+
+/* home bottom end */
+
+/* navbar bottom start */
+#remain {
+    width: 70%;
+}
+
+#list, #lyric {
+    display: none;
+    list-style: none;
+    color: #fff;
+}
+
+#myList, #myLyric {
+    text-shadow:  0 2px 2px rgb(0 0 0 /0.5);
+
+}
+
+.short-detail {
+    width: 80%;
+    overflow: hidden;
+}
+
+/* navbar bottom end */
+
+.btn-right {
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    width:2rem;
+    height:2rem;
+    /* padding: 0.5rem 0.5rem 0.5rem 0.5rem; */
+    border-radius:50%;
+    /* display:flex */
+
+}
+
+
+
+.btn-left {
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    margin-bottom: 0.5rem;
+    width:2rem;
+    height:2rem;
+    border-radius:50%;
+    /* display:flex */
+}
+
+/* #list, {
+
+} */
+
